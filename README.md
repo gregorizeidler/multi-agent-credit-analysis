@@ -76,10 +76,10 @@ graph TB
     M --> O
     N --> O
     
-    style D fill:#e1f5fe
-    style E fill:#f3e5f5
-    style F fill:#fff3e0
-    style G fill:#e8f5e8
+    style D fill:#1976d2,stroke:#0d47a1,stroke-width:2px,color:#fff
+    style E fill:#7b1fa2,stroke:#4a148c,stroke-width:2px,color:#fff
+    style F fill:#f57c00,stroke:#e65100,stroke-width:2px,color:#fff
+    style G fill:#388e3c,stroke:#1b5e20,stroke-width:2px,color:#fff
 ```
 
 ### Arquitetura Técnica Detalhada
@@ -143,12 +143,12 @@ graph TB
     DOCKER --> LOGS
     DOCKER --> MONITOR
     
-    style API fill:#e3f2fd
-    style LG fill:#f1f8e9
-    style DG fill:#fff3e0
-    style DA fill:#f3e5f5
-    style RA fill:#ffebee
-    style QA fill:#e8f5e8
+    style API fill:#1565c0,stroke:#0d47a1,stroke-width:2px,color:#fff
+    style LG fill:#2e7d32,stroke:#1b5e20,stroke-width:2px,color:#fff
+    style DG fill:#1976d2,stroke:#0d47a1,stroke-width:2px,color:#fff
+    style DA fill:#7b1fa2,stroke:#4a148c,stroke-width:2px,color:#fff
+    style RA fill:#d32f2f,stroke:#b71c1c,stroke-width:2px,color:#fff
+    style QA fill:#388e3c,stroke:#1b5e20,stroke-width:2px,color:#fff
 ```
 
 ## 🎯 Casos de Uso
@@ -531,57 +531,25 @@ git push origin feature/nova-funcionalidade
 
 ## 🗺️ Roadmap
 
-### Versão 1.1 (Q2 2024)
+### Versão 1.1 (Q1 2025)
 - [ ] Dashboard web interativo
 - [ ] Cache distribuído (Redis)
 - [ ] Webhooks para integração
 - [ ] Análise de séries temporais
 
-### Versão 1.2 (Q3 2024)
+### Versão 1.2 (Q2 2025)
 - [ ] ML models customizados
 - [ ] Multi-tenant support
 - [ ] Real-time processing
 - [ ] Advanced analytics
 
-### Versão 2.0 (Q4 2024)
+### Versão 2.0 (Q3 2025)
 - [ ] Microservices architecture
 - [ ] Kubernetes deployment
 - [ ] GraphQL API
 - [ ] Machine Learning pipeline
 
-## 🆘 Suporte e Comunidade
 
-### 💬 Onde Buscar Ajuda
-- 📖 **Documentação**: Comece sempre pela documentação
-- 🐛 **Issues**: Para bugs e feature requests
-- 💭 **Discussions**: Para perguntas e discussões
-- 📧 **Email**: contato@exemplo.com
-
-### ❓ FAQ
-
-<details>
-<summary>Como configurar as API keys?</summary>
-
-Copie o arquivo `env.example` para `.env` e adicione suas chaves:
-```bash
-cp env.example .env
-nano .env
-```
-</details>
-
-<details>
-<summary>Quais formatos de documento são suportados?</summary>
-
-- PDF (.pdf) - texto e escaneado
-- Word (.docx) 
-- Imagens (.png, .jpg, .jpeg, .tiff) via OCR
-</details>
-
-<details>
-<summary>Como escalar para produção?</summary>
-
-Consulte o [Guia de Deploy](docs/deployment_guide.md) para instruções detalhadas de produção.
-</details>
 
 ## 📄 Licença
 
