@@ -563,4 +563,4 @@ Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICE
 
 [📚 Documentação](docs/) • [🎯 Exemplos](docs/api_examples.md) • [🤝 Contribuir](CONTRIBUTING.md) • [🐛 Reportar Bug](https://github.com/user/orquestra-agentes/issues)
 
-</div>
+</div> 
