@@ -1,0 +1,90 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.11]
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y tesseract-ocr tesseract-ocr-por poppler-utils
+
+    - name: Install Poetry
+      uses: snok/install-poetry@v1
+      with:
+        version: latest
+        virtualenvs-create: true
+        virtualenvs-in-project: true
+
+    - name: Load cached venv
+      id: cached-poetry-dependencies
+      uses: actions/cache@v3
+      with:
+        path: .venv
+        key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+
+    - name: Install dependencies
+      if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+      run: poetry install --no-interaction --no-root
+
+    - name: Install project
+      run: poetry install --no-interaction
+
+    - name: Lint with flake8
+      run: |
+        poetry run flake8 src tests --count --select=E9,F63,F7,F82 --show-source --statistics
+        poetry run flake8 src tests --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
+
+    - name: Check code formatting with black
+      run: poetry run black --check src tests
+
+    - name: Check import sorting with isort
+      run: poetry run isort --check-only src tests
+
+    - name: Type check with mypy
+      run: poetry run mypy src
+
+    - name: Test with pytest
+      run: |
+        poetry run pytest tests/ -v --cov=src --cov-report=xml
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+
+  docker-build:
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Build Docker image
+      run: docker build -t orquestra-agentes:latest .
+    
+    - name: Test Docker image
+      run: |
+        docker run --rm --env-file .env.example -p 8000:8000 -d --name test-container orquestra-agentes:latest
+        sleep 30
+        curl -f http://localhost:8000/health || exit 1
+        docker stop test-container
